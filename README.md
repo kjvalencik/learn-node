@@ -33,7 +33,7 @@ Table of Contents
 2. [Express](#chapter-2-express)
 3. [Grunt](#chapter-3-grunt)
 4. [Blocking and non-blocking code](#chapter-4-blocking-and-non-blocking-code)
-5. [Socket.io](#chapter-5-socketio)
+5. [Web Sockets](#chapter-5-web-sockets)
 6. [Sharing code between client and server](#chapter-6-sharing-code-between-client-and-server)
 
 Chapter 0: Installing
@@ -253,20 +253,20 @@ for another 5 seconds while request is blocking. Additional requests will contin
 will stack. However, node.js has a way of avoiding this: asynchronous, non-blocking, callback driven coding.
 Let's rewrite our handler to prevent blocking:
 
-routeHandler = function (req, res) {
-	res.send('<h1>' + escape(hello(req.params.text)) + '</h1>');
-
-	// Simulate a long running task
-	var start = new Date(),
-		runTask;
-
-	runTask = function () {
-		if (new Date() - start < 5000) {
-			setImmediate(runTask);
-		}
-	};
-	runTask();
-}
+	routeHandler = function (req, res) {
+		res.send('<h1>' + escape(hello(req.params.text)) + '</h1>');
+	
+		// Simulate a long running task
+		var start = new Date(),
+			runTask;
+	
+		runTask = function () {
+			if (new Date() - start < 5000) {
+				setImmediate(runTask);
+			}
+		};
+		runTask();
+	}
 
 `setImmediate` will take a function a place it onto the end of the event loop so that any events that are waiting
 in the queue will be processed before the next iteration of the loop. This will prevent any requests from blocking
