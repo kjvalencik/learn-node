@@ -72,6 +72,8 @@ Prerequisite: Install [Visual Studio](http://www.microsoft.com/visualstudio)
 
 Binary: [Download](http://nodejs.org/download/)
 
+[Back To Top](#table-of-contents)
+
 Chapter 1: NPM and CommonJS
 ---------------------------
 
@@ -110,6 +112,8 @@ Update index.js to use your new module:
 	var hello = require('./hello');
 
 	hello(process.argv[2]);
+
+[Back To Top](#table-of-contents)
 
 Chapter 2: Express
 ------------------
@@ -172,6 +176,8 @@ Test by hitting `http://localhost:3000/world` with a web browser.
 
 *Note: Keep in mind, that since modules are not reloaded, you will need to restart your server for them to take effect.*
 
+[Back To Top](#table-of-contents)
+
 Chapter 3: Grunt
 ----------------
 
@@ -217,6 +223,8 @@ Instead of running `node index`, run `grunt`
 
 Notice that whenever javascript files are updated, the grunt task will automatically
 restart node for you.
+
+[Back To Top](#table-of-contents)
 
 Chapter 4: Blocking and non-blocking code
 -----------------------------------------
@@ -271,6 +279,8 @@ Let's rewrite our handler to prevent blocking:
 `setImmediate` will take a function a place it onto the end of the event loop so that any events that are waiting
 in the queue will be processed before the next iteration of the loop. This will prevent any requests from blocking
 the response of new requests. Note: `setImmediate` is used where `process.nextTick` was formerly recommended.
+
+[Back To Top](#table-of-contents)
 
 Chapter 5: Web Sockets
 ----------------------
@@ -432,6 +442,8 @@ Next, we will create some client side code to connect to socket.io and begin upd
 
 You should now have a fully functioning clock based on server side time.
 
+[Back To Top](#table-of-contents)
+
 Chapter 6: Sharing code between client and server
 -------------------------------------------------
 
@@ -442,6 +454,8 @@ This is a much deeper topic than this guide is intended, therefore, I will just 
 missing functionality in some browsers (e.g., `forEach()`)
 - [Browserfy](https://github.com/substack/node-browserify): CommonJS style script loading for the browser
 - [Rendr](https://github.com/airbnb/rendr): Backbone.js rendering for server and client
+
+[Back To Top](#table-of-contents)
 
 License
 -------
