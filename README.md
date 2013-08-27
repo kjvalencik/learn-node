@@ -18,9 +18,9 @@ between client and server.
 About this tutorial
 -------------------
 
-This tutorial will attempt to step you through your first node.js application. Along the way learning some of the
-common patters of an asynchronous callback driven language and some of the pitfalls while being introduced to popular
-libraries. Code examples for each step of the tutorial are contained with a folder.
+This tutorial will attempt to step you through your first node.js application. Along the way, you will learn some of the
+common patterns of an asynchronous callback driven language, as well as some of the pitfalls, while being introduced to popular
+libraries. Code examples for each chapter can be found within each folder.
 
 At any point, you can reset your code back to a clean state with:
 
@@ -91,9 +91,9 @@ Run:
 	node index K.J.
 
 [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) is the dependency system used by node.js. Modules are loaded from
-local files, modules installed in the local node_modules folder and finally the global node_modules directory. Modules are
-only loaded once per running instance of node.js. All additional calls of modules are passed a a references of the module.exports
-objects.
+local files, modules installed in the local node_modules folder, and finally the global node_modules directory. Modules are
+only loaded once per running instance of node.js. Each additional time a module is required, it is passed a reference to
+the module.exports returned by the module.
 
 Create a module, hello.js:
 
@@ -256,8 +256,8 @@ running task. Edit index.js:
 	// Start a web server
 	app.listen(3000);
 
-Test. visit `http://localhost:3000/world`. Notice that after each page visit, no other pages can be served
-for another 5 seconds while request is blocking. Additional requests will continue to queue up, and wait times
+Test by visiting `http://localhost:3000/world`. Notice that after each page visit, no other pages can be served
+for another 5 seconds while the request is blocking. Additional requests will continue to queue up, and wait times
 will stack. However, node.js has a way of avoiding this: asynchronous, non-blocking, callback driven coding.
 Let's rewrite our handler to prevent blocking:
 
@@ -276,7 +276,7 @@ Let's rewrite our handler to prevent blocking:
 		runTask();
 	}
 
-`setImmediate` will take a function a place it onto the end of the event loop so that any events that are waiting
+`setImmediate` will take a function and place it onto the end of the event loop so that any events that are waiting
 in the queue will be processed before the next iteration of the loop. This will prevent any requests from blocking
 the response of new requests. Note: `setImmediate` is used where `process.nextTick` was formerly recommended.
 
@@ -288,11 +288,11 @@ Chapter 5: Web Sockets
 Web sockets are a feature of newer browsers. Essentially, they are http connections that are kept alive indefinitely so
 that you may write event based code instead of polling for new data. Because web sockets are a newer feature, not all
 web servers and not all web browsers support them. Both [nginx](http://nginx.org/) and [haproxy](http://haproxy.1wt.eu/)
-hav excellent support for web sockets. There are also client / server libraries such as [socket.io](http://socket.io/) and
+have excellent support for web sockets. There are also client / server libraries such as [socket.io](http://socket.io/) and
 [sockjs](http://sockjs.org) that take care of the fallback logic when working with web sockets.
 
 In this example, you will use socket.io. Socket.io will first attempt to establish a native web socket connection, if that
-fails it will attempt to use small flash application to establish the connection, and finally it will fall back to xhr
+fails, it will attempt to use a small flash application to establish the connection, and finally it will fall back to xhr
 polling.
 
 Let's create a new express application. If you have not installed the cli tool:
@@ -348,14 +348,14 @@ Add a placeholder for some content later on:
 
 You can create a socket.io server with as little code as `var io = require('socket.io').listen(3001);`. However,
 if you would like socket.io to listen on the same port as your webserver, you will need to pass your express
-server to listen instead of a port number. Update app.js:
+server to `listen()` instead of a port number. Update app.js:
 
 	var server = http.createServer(app).listen(app.get('port'), function(){
 		console.log('Express server listening on port ' + app.get('port'));
 	});
 	var io = require('socket.io').listen(server);
 
-You are now ready to start passing data between browser and server along a socket. You are going to build a simple
+You are now ready to start using sockets to pass data between browser and server. You are going to build a simple
 server side clock. Start by creating the server side logic by appending to app.js:
 
 	// Ran when a client connects to socket.io
@@ -405,9 +405,9 @@ server side clock. Start by creating the server side logic by appending to app.j
 	});
 
 When a new connection is received, the server will start sending time on the `time` channel. In addition, it will listen
-for start / stop same channel. When a stop event is received, updates stop being send. When a start command is received,
-updates begin being sent again. Finally, the code listens for the `disconnect` event and will stop time events to prevent
-a leak.
+for `start` and  `stop` on the same channel. When a `stop` command is received, updates stop being sent. When a `start` command
+is received, updates begin being sent again. Finally, the code listens for the `disconnect` event and will stop time events to
+prevent a leak when clients disconnect.
 
 Next, we will create some client side code to connect to socket.io and begin updating the clock. Create public/javascripts/script.js:
 
@@ -447,8 +447,8 @@ You should now have a fully functioning clock based on server side time.
 Chapter 6: Sharing code between client and server
 -------------------------------------------------
 
-There really isn't any magic bullet for sharing code between the client and server. However, it is possible if you are careful.
-This is a much deeper topic than this guide is intended, therefore, I will just share a few resources.
+There really isn't a magic bullet for sharing code between the client and server. This is a much deeper topic
+than the guide is intended; therefore, I will just share a few resources.
 
 - [Underscore](http://underscorejs.org/): Functional library that will help prevent errors caused by
 missing functionality in some browsers (e.g., `forEach()`)
