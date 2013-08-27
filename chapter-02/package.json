@@ -1,0 +1,12 @@
+{
+  "name": "learn-node",
+  "version": "0.0.0",
+  "description": "Learn Node.js",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~3.3.5",
+    "escape-html": "~1.0.0"
+  }
+}
